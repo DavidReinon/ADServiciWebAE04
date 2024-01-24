@@ -1,19 +1,16 @@
+<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="es">
     <head>
         <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>AE04 Servici Web</title>
         <link rel="stylesheet" href="assets/css/styles.css" />
     </head>
     <body>
         <h1>Open Trivial Questions</h1>
-
-        <!-- <p>Acciones con BD:</p>
-            <button type="submit" formaction="acciones/crear_BD.php">
-                Crear Base de Datos
-            </button> -->
         <button id="obtenerPreguntasApi">Obtener Preguntas de la API</button>
-        <div id="resultadoApi"></div>
-        <script src="assets/js/main.js"></script>
+        <div id="resultadoApi" class="contenedor-preguntas"></div>
+        <script src="assets/js/main.js" defer></script>
     </body>
 </html>

@@ -1,0 +1,42 @@
+/* assets/css/styles.css */
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+
+h1 {
+    text-align: center;
+}
+
+.contenedor-preguntas {
+    margin-top: 20px;
+}
+
+.preguntaCompleta {
+    border: 5px solid #ddd;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 1px;
+}
+
+.preguntaString {
+    font-weight: bold;
+}
+.infoAdicional {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+
+.respuestas {
+    margin-top: 10px;
+}
+
+.respuesta {
+    margin-bottom: 5px;
+}
+
+.correcta {
+    color: green;
+    font-weight: bold;
+}
