@@ -1,7 +1,7 @@
 // assets/js/main.js
 const urlApi = "https://opentdb.com/api.php?amount=";
 const defaultAmount = "10";
-const allData = null;
+let allData = null;
 
 //Afegim a un boto del HTML la funcion per cridar la API
 document
@@ -21,9 +21,9 @@ const getData = async () => {
     try {
         const response = await fetch(urlApi + defaultAmount);
         const data = await response.json();
-        mostrarPreguntas(data.results);
-        document.getElementById("guardarPreguntasBD").disabled = false;
         allData = data.results;
+        mostrarPreguntas();
+        document.getElementById("guardarPreguntasBD").disabled = false;
     } catch (error) {
         console.error("Error al obtener información:", error);
     }
@@ -31,25 +31,25 @@ const getData = async () => {
 const guardarPreguntasEnBD = () => {
     $.ajax({
         type: "POST",
-        url: "../bbdd/post.php", // Ruta del script PHP para insertar preguntas
+        url: "bbdd/post.php", // Ruta del script PHP para insertar preguntas
         data: JSON.stringify(allData), // Supongamos que 'data' contiene las preguntas obtenidas de la API
         contentType: "application/json", // Especificamos el tipo de contenido como JSON
-        success: function (response) {
-            alert(response);
+        success: (response) => {
+            console.error(response);
         },
-        error: function () {
-            alert("Error al guardar preguntas en la base de datos");
+        error: () => {
+            console.error("Error al guardar preguntas en la base de datos");
         },
     });
     document.getElementById("guardarPreguntasBD").disabled = true;
 };
 
 // Funció per a mostrar tota la informacion sobre les preguntes en el DOM
-const mostrarPreguntas = (preguntas) => {
+const mostrarPreguntas = () => {
     const resultatDiv = document.getElementById("resultadoApi");
     resultatDiv.innerHTML = "";
 
-    preguntas.forEach((pregunta, index) => {
+    allData.forEach((pregunta, index) => {
         const preguntaDiv = document.createElement("div");
         preguntaDiv.classList.add("preguntaCompleta");
 
