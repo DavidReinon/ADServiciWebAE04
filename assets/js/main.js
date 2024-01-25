@@ -1,21 +1,47 @@
 // assets/js/main.js
 const urlApi = "https://opentdb.com/api.php?amount=";
 const defaultAmount = "10";
+const allData = null;
 
 //Afegim a un boto del HTML la funcion per cridar la API
 document
     .getElementById("obtenerPreguntasApi")
-    .addEventListener("click", () => obtenerInformacion());
+    .addEventListener("click", () => getData());
+
+document
+    .getElementById("guardarPreguntasBD")
+    .addEventListener("click", () => guardarPreguntasEnBD());
+
+document
+    .getElementById("obtenerPreguntasBD")
+    .addEventListener("click", () => guardarPreguntasEnBD());
 
 //Funció per cridar a la API y obtindre la informacio
-const obtenerInformacion = async () => {
+const getData = async () => {
     try {
         const response = await fetch(urlApi + defaultAmount);
         const data = await response.json();
         mostrarPreguntas(data.results);
+        document.getElementById("guardarPreguntasBD").disabled = false;
+        allData = data.results;
     } catch (error) {
         console.error("Error al obtener información:", error);
     }
+};
+const guardarPreguntasEnBD = () => {
+    $.ajax({
+        type: "POST",
+        url: "../bbdd/post.php", // Ruta del script PHP para insertar preguntas
+        data: JSON.stringify(allData), // Supongamos que 'data' contiene las preguntas obtenidas de la API
+        contentType: "application/json", // Especificamos el tipo de contenido como JSON
+        success: function (response) {
+            alert(response);
+        },
+        error: function () {
+            alert("Error al guardar preguntas en la base de datos");
+        },
+    });
+    document.getElementById("guardarPreguntasBD").disabled = true;
 };
 
 // Funció per a mostrar tota la informacion sobre les preguntes en el DOM
@@ -51,7 +77,7 @@ const mostrarInfoAdicional = (pregunta) => {
 //Funció per a mostrar les posibles respostes amb la correcta subrayada
 const mostrarRespostes = (pregunta) => {
     const respostesHTML = pregunta.incorrect_answers.map(
-        (respuesta) => `<div class="respuesta">${respuesta}</div>`
+        (incorrect_answer) => `<div class="respuesta">${incorrect_answer}</div>`
     );
 
     // Agregar la resposta correcta amb un estil especial
