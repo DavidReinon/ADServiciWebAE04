@@ -1,11 +1,33 @@
 /* assets/css/styles.css */
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Arial", sans-serif;
     margin: 20px;
+    background-color: #f4f4f4; /* Fondo de la página */
 }
 
 h1 {
     text-align: center;
+    color: #333; /* Color del título */
+}
+
+#botones {
+    margin-top: 20px;
+    text-align: center;
+}
+
+button {
+    background-color: #3498db; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    padding: 10px 20px;
+    margin: 5px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+button:disabled {
+    background-color: #bdc3c7; /* Color de fondo del botón deshabilitado */
+    cursor: not-allowed;
 }
 
 .contenedor-preguntas {
@@ -13,30 +35,46 @@ h1 {
 }
 
 .preguntaCompleta {
-    border: 5px solid #ddd;
-    padding: 10px;
-    margin-bottom: 10px;
-    border-radius: 1px;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    background-color: #fff; /* Color de fondo del contenedor de pregunta */
 }
 
 .preguntaString {
     font-weight: bold;
+    color: #333; /* Color del texto de la pregunta */
 }
+
 .infoAdicional {
     padding: 10px;
-    margin-bottom: 10px;
+    margin-top: 10px;
     border-radius: 5px;
+    background-color: #ecf0f1; /* Color de fondo de la información adicional */
 }
 
 .respuestas {
-    margin-top: 10px;
+    margin-top: 15px;
 }
 
 .respuesta {
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    background-color: #fff; /* Color de fondo de las respuestas */
 }
 
 .correcta {
-    color: green;
+    color: #27ae60; /* Color del texto de la respuesta correcta */
     font-weight: bold;
+}
+
+/* Agregado para mejorar la apariencia en dispositivos pequeños */
+@media screen and (max-width: 600px) {
+    .preguntaCompleta {
+        margin: 0;
+        padding: 10px;
+    }
 }

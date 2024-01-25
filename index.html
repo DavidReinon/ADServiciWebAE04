@@ -4,20 +4,20 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>AE04 Servici Web</title>
+        <title>AE04 Servicio Web</title>
         <link rel="stylesheet" href="assets/css/styles.css" />
     </head>
     <body>
         <h1>Open Trivial Questions</h1>
-        <div>
+        <div id="botones">
             <button id="obtenerPreguntasApi">
                 Obtener Preguntas de la API
             </button>
             <button id="obtenerPreguntasBD">Obtener Preguntas de BD</button>
+            <button id="guardarPreguntasBD" disabled="true">
+                Guardar Preguntas en BD
+            </button>
         </div>
-        <button id="guardarPreguntasBD" disabled="true">
-            Guardar Preguntas en BD
-        </button>
         <div id="resultadoApi" class="contenedor-preguntas"></div>
         <script src="assets/js/main.js" defer></script>
     </body>
