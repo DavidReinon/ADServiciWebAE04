@@ -1,21 +1,21 @@
 <?php
 // Configura la conexión a tu base de datos
 $servidor = "localhost";
-$usuario = "tu_usuario";
-$password = "tu_contraseña";
-$dbname = "tu_base_de_datos";
+$usuari = "root";
+$password = "";
+$dbname = "trivial";
 
 // Conecta a la base de datos
-$conexion = new mysqli($servidor, $usuario, $password, $dbname);
+$conexio = mysqli_connect($servidor, $usuari, $password, $dbname);
 
 // Verifica la conexión
-if ($conexion->connect_error) {
-    die("Error en la conexión a MySQL: " . $conexion->connect_error);
+if ($conexio->connect_error) {
+    die("Error en la conexión a MySQL: " . $conexio->connect_error);
 }
 
 // Realiza la consulta a la base de datos
 $sql = "SELECT * FROM preguntas";
-$resultado = $conexion->query($sql);
+$resultado = $conexio->query($sql);
 
 // Verifica si hay resultados
 if ($resultado->num_rows > 0) {
@@ -34,4 +34,4 @@ if ($resultado->num_rows > 0) {
 }
 
 // Cierra la conexión a la base de datos
-$conexion->close();
+$conexio->close();

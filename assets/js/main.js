@@ -6,7 +6,7 @@ let allData = null;
 //Afegim a un boto del HTML la funcion per cridar la API
 document
     .getElementById("obtenerPreguntasApi")
-    .addEventListener("click", () => getData());
+    .addEventListener("click", () => obtindrePreguntesApi());
 
 document
     .getElementById("guardarPreguntasBD")
@@ -14,10 +14,10 @@ document
 
 document
     .getElementById("obtenerPreguntasBD")
-    .addEventListener("click", () => guardarPreguntasEnBD());
+    .addEventListener("click", () => obtindrePreguntesBD());
 
 //Funció per cridar a la API y obtindre la informacio
-const getData = async () => {
+const obtindrePreguntesApi = async () => {
     try {
         const response = await fetch(urlApi + defaultAmount);
         const data = await response.json();
@@ -28,6 +28,19 @@ const getData = async () => {
         console.error("Error al obtener información:", error);
     }
 };
+
+const obtindrePreguntesBD = async () => {
+    try {
+        const response = await fetch("bbdd/get.php");
+        const data = await response.json();
+        allData = data;
+        mostrarPreguntas();
+        document.getElementById("guardarPreguntasBD").disabled = true;
+    } catch (error) {
+        console.error("Error al obtener información:", error);
+    }
+};
+
 const guardarPreguntasEnBD = () => {
     $.ajax({
         type: "POST",
