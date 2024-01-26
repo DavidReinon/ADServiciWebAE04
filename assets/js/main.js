@@ -29,16 +29,20 @@ const obtindrePreguntesApi = async () => {
     }
 };
 
-const obtindrePreguntesBD = async () => {
-    try {
-        const response = await fetch("bbdd/get.php");
-        const data = await response.json();
-        allData = data;
-        mostrarPreguntas();
-        document.getElementById("guardarPreguntasBD").disabled = true;
-    } catch (error) {
-        console.error("Error al obtener información:", error);
-    }
+const obtindrePreguntesBD = () => {
+    $.ajax({
+        type: "GET",
+        url: "bbdd/get.php",
+        dataType: "json",
+        success: (data) => {
+            allData = data;
+            mostrarPreguntas();
+            document.getElementById("guardarPreguntasBD").disabled = true;
+        },
+        error: (error) => {
+            console.error("Error al obtener información:", error);
+        },
+    });
 };
 
 const guardarPreguntasEnBD = () => {
@@ -89,9 +93,17 @@ const mostrarInfoAdicional = (pregunta) => {
 
 //Funció per a mostrar les posibles respostes amb la correcta subrayada
 const mostrarRespostes = (pregunta) => {
-    const respostesHTML = pregunta.incorrect_answers.map(
-        (incorrect_answer) => `<div class="respuesta">${incorrect_answer}</div>`
-    );
+    let arrayIncorrectAnswers;
+
+    //En el caso de ser info de la API es un array, si no (desde la BD) es JSON
+    if (Array.isArray(pregunta.incorrect_answers)) {
+        arrayIncorrectAnswers = pregunta.incorrect_answers;
+    } else {
+        arrayIncorrectAnswers = JSON.parse(pregunta.incorrect_answers);
+    }
+    const respostesHTML = arrayIncorrectAnswers.map((incorrect_answer) => {
+        return `<div class="respuesta">${incorrect_answer}</div>`;
+    });
 
     // Agregar la resposta correcta amb un estil especial
     respostesHTML.push(

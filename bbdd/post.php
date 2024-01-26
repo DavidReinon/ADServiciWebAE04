@@ -26,7 +26,7 @@ foreach ($data as $preguntaInfo) {
     $resposta_correcta = $conexio->real_escape_string($preguntaInfo["correct_answer"]);
     $respostes_incorrectes = json_encode($preguntaInfo["incorrect_answers"]);
 
-    $sql = "INSERT INTO preguntas (tipus, dificultat, categoria, pregunta, resposta_correcta, 
+    $sql = "INSERT INTO preguntes (tipus, dificultat, categoria, pregunta, resposta_correcta, 
     respostes_incorrectes) VALUES ('$tipus', '$dificultat', '$categoria', '$pregunta', 
     '$resposta_correcta', '$respostes_incorrectes')";
 

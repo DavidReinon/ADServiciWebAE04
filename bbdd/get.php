@@ -14,7 +14,7 @@ if ($conexio->connect_error) {
 }
 
 // Realiza la consulta a la base de datos
-$sql = "SELECT * FROM preguntas";
+$sql = "SELECT * FROM preguntes";
 $resultado = $conexio->query($sql);
 
 // Verifica si hay resultados
@@ -23,6 +23,8 @@ if ($resultado->num_rows > 0) {
 
     // Recorre los resultados y agrega cada pregunta al array
     while ($fila = $resultado->fetch_assoc()) {
+        //$respuestasIncorrectas = explode(',', $fila["respostes_incorrectes"]);
+
         // Aquí construyes el objeto de pregunta
         $pregunta = array(
             "type" => $fila["tipus"],
@@ -30,9 +32,8 @@ if ($resultado->num_rows > 0) {
             "category" => $fila["categoria"],
             "question" => $fila["pregunta"],
             "correct_answer" => $fila["resposta_correcta"],
-            "incorrect_answers" => json_decode($fila["respostes_incorrectas"]),
+            "incorrect_answers" => $fila["respostes_incorrectes"]
         );
-
         $preguntas[] = $pregunta;
     }
 
