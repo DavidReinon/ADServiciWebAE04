@@ -23,7 +23,17 @@ if ($resultado->num_rows > 0) {
 
     // Recorre los resultados y agrega cada pregunta al array
     while ($fila = $resultado->fetch_assoc()) {
-        $preguntas[] = $fila;
+        // Aquí construyes el objeto de pregunta
+        $pregunta = array(
+            "type" => $fila["tipus"],
+            "difficulty" => $fila["dificultat"],
+            "category" => $fila["categoria"],
+            "question" => $fila["pregunta"],
+            "correct_answer" => $fila["resposta_correcta"],
+            "incorrect_answers" => json_decode($fila["respostes_incorrectas"]),
+        );
+
+        $preguntas[] = $pregunta;
     }
 
     // Imprime las preguntas en formato JSON
