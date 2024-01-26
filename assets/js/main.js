@@ -48,7 +48,7 @@ const guardarPreguntasEnBD = () => {
         data: JSON.stringify(allData), // Supongamos que 'data' contiene las preguntas obtenidas de la API
         contentType: "application/json", // Especificamos el tipo de contenido como JSON
         success: (response) => {
-            console.error(response);
+            console.log(response);
         },
         error: () => {
             console.error("Error al guardar preguntas en la base de datos");

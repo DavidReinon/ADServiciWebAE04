@@ -26,8 +26,8 @@ foreach ($data as $preguntaInfo) {
     $resposta_correcta = $conexio->real_escape_string($preguntaInfo["correct_answer"]);
     $respostes_incorrectes = json_encode($preguntaInfo["incorrect_answers"]);
 
-    $sql = "INSERT INTO preguntas (tipo, dificultad, categoria, pregunta, respuesta_correcta, 
-    respuestas_incorrectas) VALUES ('$tipus', '$dificultat', '$categoria', '$pregunta', 
+    $sql = "INSERT INTO preguntas (tipus, dificultat, categoria, pregunta, resposta_correcta, 
+    respostes_incorrectes) VALUES ('$tipus', '$dificultat', '$categoria', '$pregunta', 
     '$resposta_correcta', '$respostes_incorrectes')";
 
     if (!mysqli_query($conexio, $sql)) {
