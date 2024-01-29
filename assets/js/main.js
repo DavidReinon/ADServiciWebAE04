@@ -2,7 +2,6 @@
 const defautlUrlApi = "https://opentdb.com/api.php?amount=";
 let allData = null;
 
-
 //Afegim als botos del HTML les seves respecitves funcions
 document
     .getElementById("buscarPreguntesApi")
@@ -15,7 +14,6 @@ document
 document
     .getElementById("obtindrePreguntesBD")
     .addEventListener("click", () => obtindrePreguntesBD());
-
 
 /**
  * Funció per a obtindre les preguntes de la API
@@ -38,10 +36,11 @@ const buscarPreguntesApi = async () => {
         const response = await fetch(apiUrl);
         const data = await response.json();
         allData = data.results;
-        mostrarPreguntas();
+        mostrarPreguntes();
         document.getElementById("guardarPreguntesBD").disabled = false;
     } catch (error) {
-        console.error("Error al obtener información:", error);
+        console.error("Error al obtindre la informació: " + error);
+        alert("Error al obtindre la informació: " + error);
     }
 };
 
@@ -56,11 +55,12 @@ const obtindrePreguntesBD = () => {
         dataType: "json",
         success: (data) => {
             allData = data;
-            mostrarPreguntas();
+            mostrarPreguntes();
             document.getElementById("guardarPreguntesBD").disabled = true;
         },
         error: (error) => {
-            console.error("Error al obtener información:", error);
+            console.error("Error al obtindre la informació: " + error);
+            alert("Error al obtindre la informació: " + error);
         },
     });
 };
@@ -75,22 +75,24 @@ const guardarPreguntesBD = () => {
         url: "bbdd/post.php",
         data: JSON.stringify(allData),
         contentType: "application/json",
-        success: (response) => {
-            console.log(response);
+        success: () => {
+            alert("Preguntes guardades correctament.");
         },
-        error: () => {
-            console.error("Error al guardar preguntas en la base de datos");
+        error: (error) => {
+            console.error(
+                "Error al guardar preguntes en la base de dades: " + error
+            );
+            alert("Error al guardar preguntes en la base de dades: " + error);
         },
     });
     document.getElementById("guardarPreguntesBD").disabled = true;
 };
 
-
 /**
  * Funció per a mostrar les preguntes en el DOM
  * @returns {Promise<void>}
  */
-const mostrarPreguntas = () => {
+const mostrarPreguntes = () => {
     const resultatDiv = document.getElementById("resultadoApi");
     resultatDiv.innerHTML = "";
 
@@ -109,7 +111,6 @@ const mostrarPreguntas = () => {
         resultatDiv.appendChild(preguntaDiv);
     });
 };
-
 
 /**
  * Funció per a mostrar l'informació adicional de una pregunta
