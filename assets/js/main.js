@@ -35,9 +35,11 @@ document.addEventListener("DOMContentLoaded", () => {
             const type = document.getElementById("trivia_type").value;
             if (type !== "any") apiUrl += `&type=${type}`;
 
-            console.log(apiUrl);
             const response = await fetch(apiUrl);
             const data = await response.json();
+
+            if (respostaIncorrectaAPI(data.response_code)) return;
+
             allData = data.results;
             mostrarPreguntes();
             document.getElementById("guardarPreguntesBD").disabled = false;
@@ -45,6 +47,41 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error al obtindre la informació: " + error);
             alert("Error al obtindre la informació: " + error);
         }
+    };
+
+    /**
+     * Funció per a comprovar si la resposta de la API es correcta
+     * @param resposta
+     * @returns {boolean}
+     */
+    const respostaIncorrectaAPI = (resposta) => {
+        if (resposta === Number(1)) {
+            alert(
+                "No ni han suficients preguntes per a la categoria seleccionada"
+            );
+            return true;
+        }
+        if (resposta === Number(2)) {
+            alert("Arguments invalids en la petició");
+            return true;
+        }
+        if (resposta === Number(3)) {
+            alert("Token no existeix");
+            return true;
+        }
+        if (resposta === Number(4)) {
+            alert(
+                "Token ha retornat totes les preguntes posibles per a la query seleccionada"
+            );
+            return true;
+        }
+        if (resposta === Number(5)) {
+            alert(
+                "Moltes peticions en un curt període de temps. Espera 5 segons"
+            );
+            return true;
+        }
+        return false;
     };
 
     /**
