@@ -2,12 +2,12 @@
 body {
     font-family: "Arial", sans-serif;
     margin: 20px;
-    background-color: #f4f4f4; /* Fondo de la página */
+    background-color: #f4f4f4;
 }
 
 h1 {
     text-align: center;
-    color: #333; /* Color del título */
+    color: #333;
 }
 
 #botones {
@@ -15,9 +15,46 @@ h1 {
     text-align: center;
 }
 
+/* Estils per al formulari de la API */
+.form-api {
+    max-width: 400px;
+    margin: 0 auto;
+    margin-top: 30px;
+    background-color: #ffffff;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-signin-heading {
+    font-size: 24px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+select,
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 600px) {
+    .form-api {
+        padding: 10px;
+    }
+}
+
 button {
-    background-color: #3498db; /* Color de fondo del botón */
-    color: #fff; /* Color del texto del botón */
+    background-color: #3498db;
+    color: #fff;
     padding: 10px 20px;
     margin: 5px;
     border: none;
@@ -26,7 +63,7 @@ button {
 }
 
 button:disabled {
-    background-color: #bdc3c7; /* Color de fondo del botón deshabilitado */
+    background-color: #bdc3c7;
     cursor: not-allowed;
 }
 
@@ -39,19 +76,19 @@ button:disabled {
     padding: 15px;
     margin-bottom: 20px;
     border-radius: 5px;
-    background-color: #fff; /* Color de fondo del contenedor de pregunta */
+    background-color: #fff;
 }
 
 .preguntaString {
     font-weight: bold;
-    color: #333; /* Color del texto de la pregunta */
+    color: #333;
 }
 
 .infoAdicional {
     padding: 10px;
     margin-top: 10px;
     border-radius: 5px;
-    background-color: #ecf0f1; /* Color de fondo de la información adicional */
+    background-color: #ecf0f1;
 }
 
 .respuestas {
@@ -63,15 +100,14 @@ button:disabled {
     padding: 8px;
     border: 1px solid #ddd;
     border-radius: 3px;
-    background-color: #fff; /* Color de fondo de las respuestas */
+    background-color: #fff;
 }
 
 .correcta {
-    color: #27ae60; /* Color del texto de la respuesta correcta */
+    color: #27ae60;
     font-weight: bold;
 }
 
-/* Agregado para mejorar la apariencia en dispositivos pequeños */
 @media screen and (max-width: 600px) {
     .preguntaCompleta {
         margin: 0;

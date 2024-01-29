@@ -8,24 +8,22 @@ $dbname = "trivial";
 // Conecta a la base de datos
 $conexio = mysqli_connect($servidor, $usuari, $password, $dbname);
 
-// Verifica la conexión
+// Verifica la conexió
 if ($conexio->connect_error) {
     die("Error en la conexión a MySQL: " . $conexio->connect_error);
 }
 
-// Realiza la consulta a la base de datos
+// Realitza la consulta a la base de dades
 $sql = "SELECT * FROM preguntes";
 $resultado = $conexio->query($sql);
 
-// Verifica si hay resultados
+// Verifica si ni han restultats
 if ($resultado->num_rows > 0) {
     $preguntas = array();
 
-    // Recorre los resultados y agrega cada pregunta al array
+    // Recorre els resultats y agrega cada pregunta al array
     while ($fila = $resultado->fetch_assoc()) {
-        //$respuestasIncorrectas = explode(',', $fila["respostes_incorrectes"]);
-
-        // Aquí construyes el objeto de pregunta
+        // Construim la pregunta amb el format que necessita el Trivial
         $pregunta = array(
             "type" => $fila["tipus"],
             "difficulty" => $fila["dificultat"],
@@ -37,12 +35,12 @@ if ($resultado->num_rows > 0) {
         $preguntas[] = $pregunta;
     }
 
-    // Imprime las preguntas en formato JSON
+    // Mostra las preguntes en formato JSON
     echo json_encode($preguntas);
 } else {
-    // Si no hay resultados, imprime un mensaje
+    // Si no ni han resultats, mostra un mensatje
     echo json_encode(array("mensaje" => "No hay preguntas en la base de datos."));
 }
 
-// Cierra la conexión a la base de datos
+// Tanca la conexión a la base de dades
 $conexio->close();

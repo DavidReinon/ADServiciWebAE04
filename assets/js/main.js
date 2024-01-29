@@ -1,34 +1,54 @@
 // assets/js/main.js
-const urlApi = "https://opentdb.com/api.php?amount=";
-const defaultAmount = "10";
+const defautlUrlApi = "https://opentdb.com/api.php?amount=";
 let allData = null;
 
-//Afegim a un boto del HTML la funcion per cridar la API
+
+//Afegim als botos del HTML les seves respecitves funcions
 document
-    .getElementById("obtenerPreguntasApi")
-    .addEventListener("click", () => obtindrePreguntesApi());
+    .getElementById("buscarPreguntesApi")
+    .addEventListener("click", () => buscarPreguntesApi());
 
 document
-    .getElementById("guardarPreguntasBD")
-    .addEventListener("click", () => guardarPreguntasEnBD());
+    .getElementById("guardarPreguntesBD")
+    .addEventListener("click", () => guardarPreguntesBD());
 
 document
-    .getElementById("obtenerPreguntasBD")
+    .getElementById("obtindrePreguntesBD")
     .addEventListener("click", () => obtindrePreguntesBD());
 
-//Funció per cridar a la API y obtindre la informacio
-const obtindrePreguntesApi = async () => {
+
+/**
+ * Funció per a obtindre les preguntes de la API
+ * @returns {Promise<void>}
+ */
+const buscarPreguntesApi = async () => {
     try {
-        const response = await fetch(urlApi + defaultAmount);
+        const amount = document.getElementById("trivia_amount").value;
+        let apiUrl = `${defautlUrlApi}${amount}`;
+
+        const category = document.getElementById("Categoria").value;
+        if (!category === "any") apiUrl += `&category=${category}`;
+
+        const difficulty = document.getElementById("trivia_difficulty").value;
+        if (!difficulty === "any") apiUrl += `&difficulty=${difficulty}`;
+
+        const type = document.getElementById("trivia_type").value;
+        if (!type === "any") apiUrl += `&type=${type}`;
+
+        const response = await fetch(apiUrl);
         const data = await response.json();
         allData = data.results;
         mostrarPreguntas();
-        document.getElementById("guardarPreguntasBD").disabled = false;
+        document.getElementById("guardarPreguntesBD").disabled = false;
     } catch (error) {
         console.error("Error al obtener información:", error);
     }
 };
 
+/**
+ * Funció per a obtindre les preguntes de la BD
+ * @returns {Promise<void>}
+ */
 const obtindrePreguntesBD = () => {
     $.ajax({
         type: "GET",
@@ -37,7 +57,7 @@ const obtindrePreguntesBD = () => {
         success: (data) => {
             allData = data;
             mostrarPreguntas();
-            document.getElementById("guardarPreguntasBD").disabled = true;
+            document.getElementById("guardarPreguntesBD").disabled = true;
         },
         error: (error) => {
             console.error("Error al obtener información:", error);
@@ -45,12 +65,16 @@ const obtindrePreguntesBD = () => {
     });
 };
 
-const guardarPreguntasEnBD = () => {
+/**
+ * Funció per a guardar les preguntes a la BD
+ * @returns {Promise<void>}
+ */
+const guardarPreguntesBD = () => {
     $.ajax({
         type: "POST",
-        url: "bbdd/post.php", // Ruta del script PHP para insertar preguntas
-        data: JSON.stringify(allData), // Supongamos que 'data' contiene las preguntas obtenidas de la API
-        contentType: "application/json", // Especificamos el tipo de contenido como JSON
+        url: "bbdd/post.php",
+        data: JSON.stringify(allData),
+        contentType: "application/json",
         success: (response) => {
             console.log(response);
         },
@@ -58,10 +82,14 @@ const guardarPreguntasEnBD = () => {
             console.error("Error al guardar preguntas en la base de datos");
         },
     });
-    document.getElementById("guardarPreguntasBD").disabled = true;
+    document.getElementById("guardarPreguntesBD").disabled = true;
 };
 
-// Funció per a mostrar tota la informacion sobre les preguntes en el DOM
+
+/**
+ * Funció per a mostrar les preguntes en el DOM
+ * @returns {Promise<void>}
+ */
 const mostrarPreguntas = () => {
     const resultatDiv = document.getElementById("resultadoApi");
     resultatDiv.innerHTML = "";
@@ -82,7 +110,12 @@ const mostrarPreguntas = () => {
     });
 };
 
-//Funció per a mostrar l'informació adicional de una pregunta
+
+/**
+ * Funció per a mostrar l'informació adicional de una pregunta
+ * @param pregunta
+ * @returns {string}
+ */
 const mostrarInfoAdicional = (pregunta) => {
     const infoAdicionalHTML = `<p>Tipus: ${pregunta.type}</p>
     <p>Dificultat: ${pregunta.difficulty}</p>
@@ -91,11 +124,15 @@ const mostrarInfoAdicional = (pregunta) => {
     return infoAdicionalHTML;
 };
 
-//Funció per a mostrar les posibles respostes amb la correcta subrayada
+/**
+ * Funció per a mostrar les respostes amb la correcta resaltada
+ * @param pregunta
+ * @returns {string}
+ */
 const mostrarRespostes = (pregunta) => {
     let arrayIncorrectAnswers;
 
-    //En el caso de ser info de la API es un array, si no (desde la BD) es JSON
+    //En el cas de ser info de la API es un array, si no (desde la BD) es JSON
     if (Array.isArray(pregunta.incorrect_answers)) {
         arrayIncorrectAnswers = pregunta.incorrect_answers;
     } else {
